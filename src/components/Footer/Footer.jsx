@@ -21,13 +21,12 @@ const Footer = () => {
   return (
     <footer>
       <div className="flex p-2 items-center justify-between bg-amber-400">
-        <div className="flex flex-col p-2">
+        <div className="flex flex-row p-2 gap-2">
           <p className="font-semibold flex gap-2 items-center font-Robo text-amber-700 text-xl md:text-3xl">
             Style Haven
           </p>
-          <p className="font-semibold flex items-center gap-1 justify-center font-Robo text-amber-700 text-xl md:text-2xl">
-            <AiOutlineCopyrightCircle size={20} className="align-middle" />{" "}
-            2023
+          <p className="font-medium flex items-center gap-1 justify-center font-Robo text-amber-700 text-xl md:text-2xl">
+            <AiOutlineCopyrightCircle className="align-middle" /> 2023
           </p>
         </div>
         {showScrollButton && (
