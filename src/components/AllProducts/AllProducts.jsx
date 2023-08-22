@@ -29,7 +29,7 @@ const AllProducts = () => {
       // If the product is already in the cart, update its quantity
       const updatedCart = cart.map((item, index) => {
         if (index === productIndex) {
-          return { ...item, quantity: item.quantity + 1 };
+         alert("Product is already in the cart")
         }
         return item;
       });

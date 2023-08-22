@@ -20,13 +20,13 @@ const Products = () => {
   //Add to Cart
   const addToCart = (product) => {
     // Check if the product is already in the cart
-    const productIndex = cart.findIndex((item) => item.id === product.id);
+    const productIndex = cart.findIndex((item) => item?.id === product?.id);
 
     if (productIndex !== -1) {
       // If the product is already in the cart, update its quantity
       const updatedCart = cart.map((item, index) => {
         if (index === productIndex) {
-          return { ...item, quantity: item.quantity + 1 };
+         alert("Product is already in the cart..!!")
         }
         return item;
       });
@@ -35,7 +35,7 @@ const Products = () => {
       // If the product is not in the cart, add it with a quantity of 1
       setCart([...cart, { ...product, quantity: 1 }]);
     }
-  };
+    };
 
   useEffect(() => {
     // Introduce a delay of 1.5 seconds before showing the loading spinner
@@ -64,7 +64,6 @@ const Products = () => {
   const closeModal = () => {
     setSelectedProduct(null);
   };
-
   return (
     <div className="text-center p-2">
       <h2 className="text-2xl text-amber-700 font-Robo font-semibold mb-4">
@@ -79,7 +78,7 @@ const Products = () => {
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
             <li
-              key={product.id}
+              key={product?.id}
               className="bg-amber-100 p-4 shadow-md rounded-md"
             >
               <div className="flex justify-between items-center text-amber-300">

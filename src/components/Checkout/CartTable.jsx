@@ -5,28 +5,28 @@ const CartTable = ({ cart, handleCartChange }) => {
   //QUANTITY CHANGE
   const handleQuantityChange = (product, newQuantity) => {
     const updatedCart = cart.map((item) =>
-      item.id === product.id ? { ...item, quantity: newQuantity } : item
+      item?.id === product?.id ? { ...item, quantity: newQuantity } : item
     );
     handleCartChange(updatedCart);
   };
   //INCREASING THE ITEM
   const handleIncrement = (product) => {
-    handleQuantityChange(product, product.quantity + 1);
+    handleQuantityChange(product, product?.quantity + 1);
   };
   //DECREASING THE ITEM
   const handleDecrement = (product) => {
     if (product.quantity > 1) {
-      handleQuantityChange(product, product.quantity - 1);
+      handleQuantityChange(product, product?.quantity - 1);
     }
   };
   //DELETING THE ITEM
   const handleDelete = (product) => {
-    const updatedCart = cart.filter((item) => item.id !== product.id);
+    const updatedCart = cart.filter((item) => item?.id !== product?.id);
     handleCartChange(updatedCart);
   };
   //TOTAL PURCHASE PRICE
   const total = cart.reduce((total, product) => {
-    return total + product.price * product.quantity;
+    return total + product?.price * product?.quantity;
   }, 0);
 
   return (
@@ -60,11 +60,11 @@ const CartTable = ({ cart, handleCartChange }) => {
                 <tbody className="font-Robo">
                   {cart.map((product) => (
                     <tr
-                      key={product.id}
+                      key={product?.id}
                       className="border-b hover:bg-amber-200 border-amber-700 text-center"
                     >
-                      <td className="p-2">{product.title}</td>
-                      <td className="p-2">${product.price}</td>
+                      <td className="p-2">{product?.title}</td>
+                      <td className="p-2">${product?.price}</td>
                       <td className="p-2 gap-2 flex justify-center">
                         <button
                           className="bg-amber-700 text-amber-300 p-1 transition-transform hover:scale-95 rounded-md shadow-md"
@@ -72,7 +72,7 @@ const CartTable = ({ cart, handleCartChange }) => {
                         >
                           <AiOutlineMinus />
                         </button>
-                        <span>{product.quantity}</span>
+                        <span>{product?.quantity}</span>
                         <button
                           className="bg-amber-700 text-amber-300 p-1 transition-transform hover:scale-95 rounded-md shadow-md"
                           onClick={() => handleIncrement(product)}
@@ -81,7 +81,7 @@ const CartTable = ({ cart, handleCartChange }) => {
                         </button>
                       </td>
                       <td className="p-2">
-                        ${product.price * product.quantity}
+                        ${product?.price * product?.quantity}
                       </td>
                       <td>
                         <button
