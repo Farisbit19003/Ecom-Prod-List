@@ -1,5 +1,4 @@
-// CartContext.js
-import React, { createContext, useContext, useReducer, useEffect } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import { toast } from "react-toastify";
 
 const CartContext = createContext();
@@ -14,10 +13,10 @@ const cartReducer = (state, action) => {
       );
       if (productIndex !== -1) {
         toast.error("Product is already in the cart..!!");
-       
+       return state;
       } else {
         const updatedCart = [...state.cart, { ...action.payload, quantity: 1 }];
-        localStorage.setItem("cart", JSON.stringify(updatedCart)); // Update local storage
+        localStorage.setItem("cart", JSON.stringify(updatedCart)); 
         return {
           ...state,
           cart: updatedCart,
@@ -25,7 +24,7 @@ const cartReducer = (state, action) => {
       }
 
     case "SET_CART":
-      localStorage.setItem("cart", JSON.stringify(action.payload)); // Update local storage
+      localStorage.setItem("cart", JSON.stringify(action.payload));
       return {
         ...state,
         cart: action.payload,

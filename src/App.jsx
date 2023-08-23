@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify"; // Import the ToastContainer component
-import "react-toastify/dist/ReactToastify.css"; // Import the styles
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
 import AllProducts from "./components/AllProducts/AllProducts";
 import Checkout from "./components/Checkout/Checkout";
 import Footer from "./components/Footer/Footer";
@@ -22,18 +22,8 @@ function App() {
 
       <Footer />
 
-      {/* Add the ToastContainer */}
-      <ToastContainer
-        position="top-right"
-        autoClose={1000} 
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+       <ToastContainer/>
+       
     </React.Fragment>
   );
 }
