@@ -1,34 +1,38 @@
 import React from "react";
 import { AiOutlineDelete, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { useCart } from "../CartContext";
 
-const CartTable = ({ cart, handleCartChange }) => {
-  //QUANTITY CHANGE
+const CartTable = () => {
+
+  const { state, dispatch } = useCart(); // Access the cart state and dispatch action
+  const cart = state?.cart;
+
   const handleQuantityChange = (product, newQuantity) => {
     const updatedCart = cart.map((item) =>
       item?.id === product?.id ? { ...item, quantity: newQuantity } : item
     );
-    handleCartChange(updatedCart);
+    dispatch({ type: "SET_CART", payload: updatedCart }); // Dispatch the updated cart data
   };
-  //INCREASING THE ITEM
+
   const handleIncrement = (product) => {
     handleQuantityChange(product, product?.quantity + 1);
   };
-  //DECREASING THE ITEM
+
   const handleDecrement = (product) => {
     if (product.quantity > 1) {
       handleQuantityChange(product, product?.quantity - 1);
     }
   };
   //DELETING THE ITEM
-  const handleDelete = (product) => {
-    const updatedCart = cart.filter((item) => item?.id !== product?.id);
-    handleCartChange(updatedCart);
+   const handleDelete = (product) => {
+    const updatedCart = cart?.filter((item) => item?.id !== product?.id);
+    dispatch({ type: "SET_CART", payload: updatedCart }); // Dispatch the updated cart data
   };
   //TOTAL PURCHASE PRICE
-  const total = cart.reduce((total, product) => {
+  const total = cart?.reduce((total, product) => {
     return total + product?.price * product?.quantity;
   }, 0);
-
+  
   return (
     <>
       <div className=" mx-auto mt-2 h-fit w-full">
@@ -38,7 +42,7 @@ const CartTable = ({ cart, handleCartChange }) => {
           </p>
         </div>
 
-        {cart.length === 0 ? (
+        {cart?.length === 0 ? (
           <div className="text-center mt-4">
             <p className="text-lg text-amber-700  font-Robo">
               Your cart is currently empty.
@@ -58,7 +62,7 @@ const CartTable = ({ cart, handleCartChange }) => {
                   </tr>
                 </thead>
                 <tbody className="font-Robo">
-                  {cart.map((product) => (
+                  {cart?.map((product) => (
                     <tr
                       key={product?.id}
                       className="border-b hover:bg-amber-200 border-amber-700 text-center"
@@ -101,7 +105,7 @@ const CartTable = ({ cart, handleCartChange }) => {
         <div className="mt-4 flex w-full items-center justify-end">
           <p className="text-lg border-2 border-amber-700 p-2 text-amber-400 font-Robo font-semibold">
             {/* ROUND OFF TO 2 DECIMAL PLACES */}
-            Total: ${total.toFixed(2)}
+            Total: ${total?.toFixed(2)}
           </p>
         </div>
       </div>

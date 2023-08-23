@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { FaStar } from "react-icons/fa";
 
 const ProductModal = ({ isOpen, onClose, product }) => {
   const [productDetails, setProductDetails] = useState(null);
-  const [cart, setCart] = useState([]);
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       if (isOpen && product) {
@@ -24,11 +25,9 @@ const ProductModal = ({ isOpen, onClose, product }) => {
 
   if (!isOpen || !productDetails) return null;
 
-  const findCartItemIndex = (productId) => {
-    return cart.findIndex((item) => item.id === productId);
-  };
   // Destructioning
-  const { title, description, price, image } = productDetails;
+  const { title, description, price, image, rating } = productDetails;
+  const { rate, count } = rating;
 
   return (
     <div className="fixed inset-0 overflow-y-auto md:mx-0 flex items-center justify-center transition-opacity duration-300 backdrop-blur-md">
@@ -49,7 +48,7 @@ const ProductModal = ({ isOpen, onClose, product }) => {
                 <img
                   src={image}
                   alt={title}
-                  className="mx-auto md:h-auto md:max-h-80 md:object-contain h-20"
+                  className="mx-auto md:h-auto mix-blend-multiply md:max-h-80 md:object-contain h-20"
                 />
               </div>
             </div>
@@ -58,14 +57,22 @@ const ProductModal = ({ isOpen, onClose, product }) => {
                 {title}
               </h3>
 
-              <div className="md:w-3/4 md:h-3/4  flex text-start items-center">
+              <div className="md:w-3/4 md:h-3/4 flex text-center items-center">
                 <p className="text-amber-500 text my-2 text-sm md:text-base font-Jakarta mb-4">
                   {description}
                 </p>
               </div>
-              <div className="flex flex-row justify-start w-full m-auto items-end">
-                <p className="text-amber-600 mb-2 align-middle font-semibold md:text-xl font-Robo flex items-center justify-center">
-                  Price: ${price}
+              <div className="flex flex-col gap-2 justify-start w-full m-auto items-start">
+                <p className="text-amber-600 mb-2 align-middle font-semibold md:text-xl font-Jakarta flex items-center justify-center">
+                  Price <span className="ml-2 font-Robo text-amber-300"> $ {price}</span>
+                </p>
+                <p className="text-amber-600 mb-2 align-middle font-semibold md:text-xl font-Jakarta flex items-center justify-center">
+                  Rating<span className="mx-1 font-Robo text-amber-300"> {rate} </span>
+                  <FaStar color="gold" />
+                </p>
+                <p className="text-amber-600 mb-2 align-middle font-semibold md:text-xl font-Jakarta flex items-center justify-center">
+                  Reviewed by
+                  <span className="ml-1 font-Robo text-amber-300"> {count}</span>
                 </p>
               </div>
             </div>

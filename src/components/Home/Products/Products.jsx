@@ -2,40 +2,19 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineShoppingCart } from "react-icons/ai";
 import { FaSpinner } from "react-icons/fa";
+import { useCart } from "../../CartContext";
 import ProductModal from "../../Modal/ProductModal";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { dispatch } = useCart();
 
-  const [cart, setCart] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-  //Add to Cart
-  const addToCart = (product) => {
-    // Check if the product is already in the cart
-    const productIndex = cart.findIndex((item) => item?.id === product?.id);
-
-    if (productIndex !== -1) {
-      // If the product is already in the cart, update its quantity
-      const updatedCart = cart.map((item, index) => {
-        if (index === productIndex) {
-         alert("Product is already in the cart..!!")
-        }
-        return item;
-      });
-      setCart(updatedCart);
-    } else {
-      // If the product is not in the cart, add it with a quantity of 1
-      setCart([...cart, { ...product, quantity: 1 }]);
-    }
+   const  addToCart = (product) => {
+      dispatch({ type: "ADD_TO_CART", payload: product });
     };
+
 
   useEffect(() => {
     // Introduce a delay of 1.5 seconds before showing the loading spinner
@@ -76,10 +55,10 @@ const Products = () => {
         </div>
       ) : (
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
+          {products?.map((product) => (
             <li
               key={product?.id}
-              className="bg-amber-100 p-4 shadow-md rounded-md"
+              className="bg-amber-100 p-4 shadow-lg rounded-lg"
             >
               <div className="flex justify-between items-center text-amber-300">
                 <div
@@ -104,15 +83,15 @@ const Products = () => {
                 </div>
               </div>
               <img
-                src={product.image}
-                alt={product.title}
-                className="mx-auto h-24 w-24 mb-2"
+                src={product?.image}
+                alt={product?.title}
+                className="mx-auto h-24 w-24 mb-2 mix-blend-multiply"
               />
               <p className="text-lg font-Jakarta text-amber-600 font-semibold">
-                {product.title}
+                {product?.title}
               </p>
               <p className="text-amber-500 font-Robo text-lg">
-                ${product.price}
+                ${product?.price}
               </p>
             </li>
           ))}

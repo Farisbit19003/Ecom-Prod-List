@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineShoppingCart } from "react-icons/ai";
+import { BsShopWindow } from "react-icons/bs";
 import { FaSpinner } from "react-icons/fa";
+import { useCart } from "../CartContext";
 import ProductModal from "../Modal/ProductModal";
 import Category from "./Category";
+import { Link } from "react-router-dom";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -12,33 +15,12 @@ const AllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const [cart, setCart] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
-  //Store in local Storage
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-  //Add to Cart
-  const addToCart = (product) => {
-    // Check if the product is already in the cart
-    const productIndex = cart.findIndex((item) => item.id === product.id);
+  const { dispatch } = useCart();
 
-    if (productIndex !== -1) {
-      // If the product is already in the cart, update its quantity
-      const updatedCart = cart.map((item, index) => {
-        if (index === productIndex) {
-         alert("Product is already in the cart")
-        }
-        return item;
-      });
-      setCart(updatedCart);
-    } else {
-      // If the product is not in the cart, add it with a quantity of 1
-      setCart([...cart, { ...product, quantity: 1 }]);
-    }
+  const addToCart = (product) => {
+    dispatch({ type: "ADD_TO_CART", payload: product });
   };
+ 
   //Modal
   const openModal = (product) => {
     setSelectedProduct(product);
@@ -104,14 +86,21 @@ const AllProducts = () => {
           />
 
           <div className="ml-4 flex-1">
-            <h2 className="text-2xl text-amber-700 font-Robo font-semibold mb-4">
-              All Products
-            </h2>
+            <div className="flex flex-row justify-between p-1">
+              <h2 className="text-2xl text-amber-700 font-Robo font-semibold">
+                All Products
+              </h2>
+              <div className="transition-transform whitespace-nowrap p-2 shadow-md rounded-md w-fit  h-fit hover:scale-95 flex flex-row gap-1 border text-amber-300 bg-amber-700 ">
+                <Link to="/">
+                  <BsShopWindow size={24} />
+                </Link>
+              </div>
+            </div>
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((product) => (
                 <li
                   key={product.id}
-                  className="bg-amber-100 p-4 shadow-md rounded-md"
+                  className="bg-amber-100 p-4 shadow-lg rounded-lg"
                 >
                   <div className="flex justify-between items-center text-amber-300">
                     <div
@@ -138,7 +127,7 @@ const AllProducts = () => {
                   <img
                     src={product.image}
                     alt={product.title}
-                    className="mx-auto h-24 w-24 mb-2"
+                    className="mx-auto h-24 w-24 mb-2 mix-blend-multiply"
                   />
                   <p className="text-lg font-Jakarta text-amber-600 font-semibold">
                     {product.title}
