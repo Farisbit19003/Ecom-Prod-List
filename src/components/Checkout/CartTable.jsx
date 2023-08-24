@@ -33,6 +33,7 @@ const CartTable = () => {
     return total + product?.price * product?.quantity;
   }, 0);
   
+  
   return (
     <>
       <div className=" mx-auto mt-2 h-fit w-full">
@@ -85,7 +86,7 @@ const CartTable = () => {
                         </button>
                       </td>
                       <td className="p-2">
-                        ${product?.price * product?.quantity}
+                      ${(product?.price * product?.quantity).toFixed(2)}
                       </td>
                       <td>
                         <button
